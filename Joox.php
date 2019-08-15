@@ -46,7 +46,18 @@ class Joox
             }
         } elseif (is_string($urls)) {
             $this->log('GET URL: ' . $urls);
-            $html = file_get_contents($urls);
+            $ch = curl_init();
+            curl_setopt_array($ch, array(
+                    CURLOPT_URL => $urls,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_MAXREDIRS => 5,
+                    CURLOPT_SSL_VERIFYPEER => FALSE,
+                    CURLOPT_SSL_VERIFYHOST => FALSE,
+                )
+            );
+            $html = curl_exec($ch);
+            curl_close($ch);
             $dom = new DOMDocument;
             @$dom->loadHTML($html);
             foreach ($dom->getElementsByTagName('a') as $node) {
@@ -78,9 +89,9 @@ class Joox
         $curl_opts = array(CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_MAXREDIRS => 5,
-            CURLOPT_CONNECTTIMEOUT => 15,
-            CURLOPT_TIMEOUT => 0,
             CURLOPT_NOPROGRESS => false,
+            CURLOPT_SSL_VERIFYPEER => FALSE,
+            CURLOPT_SSL_VERIFYHOST => FALSE,
         );
         $results = $results_cache = array();
 
