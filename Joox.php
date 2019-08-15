@@ -91,7 +91,6 @@ class Joox
                 $params = $url;
                 $url = $url['url'];
             }
-            echo $this->totalMusik;
             $count++;
             if ($cache && file_exists('data/cache/' . md5($url))) {
                 $results_cache[$count] = array_merge($params, [
