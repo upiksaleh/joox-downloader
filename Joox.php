@@ -181,7 +181,7 @@ class Joox
                 $lyrics_api = strtr($api_lyrics, [
                     '{single}' => $data->encodeSongId
                 ]);
-                file_put_contents($fileJson, json_encode($data, JSON_PRETTY_PRINT));
+                @file_put_contents($fileJson, json_encode($data, JSON_PRETTY_PRINT));
                 $urlMusic = [
                     ['url' => $lyrics_api, 'name' => 'lyrics']
                 ];
